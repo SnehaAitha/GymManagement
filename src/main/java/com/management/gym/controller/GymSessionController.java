@@ -39,11 +39,11 @@ public class GymSessionController {
 			List<GymSession> sessions = gymSessionService.fetchAllSessions();
 			if(!sessions.isEmpty() && sessions.size()>0)
 			{
+				LocalDateTime sessionStartTime = DateUtil.convertDateStringToUTCFormat(session.getStartTimeString());
+				LocalDateTime sessionEndTime = DateUtil.convertDateStringToUTCFormat(session.getEndTimeString());
+				
 				for(GymSession sess:sessions)
 				{
-					LocalDateTime sessionStartTime = DateUtil.convertDateStringToUTCFormat(session.getStartTimeString());
-					LocalDateTime sessionEndTime = DateUtil.convertDateStringToUTCFormat(session.getEndTimeString());
-
 					if((sess.getStartTime().isEqual(sessionStartTime)) && (sess.getEndTime().isEqual(sessionEndTime))) {
 						if(session.getTrainer().getId() == sess.getTrainer().getId()) {
 							return new ResponseEntity<String>("Trainer is not available for this session.",HttpStatus.NOT_FOUND);

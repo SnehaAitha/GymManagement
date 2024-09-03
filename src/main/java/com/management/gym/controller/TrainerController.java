@@ -55,8 +55,7 @@ public class TrainerController {
 				trainer.setCity(user.getAddress().getCity());
 				trainer.setStreet(user.getAddress().getStreet());
 				trainer.setZip(user.getAddress().getZip());
-				//trainer.setAvailability(true);
-
+				
 				trainers.add(trainer);
 			}
 			addedTrainers = trainerService.saveTrainers(trainers);
