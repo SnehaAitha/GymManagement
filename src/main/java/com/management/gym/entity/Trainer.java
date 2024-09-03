@@ -1,12 +1,13 @@
 package com.management.gym.entity;
 
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,14 +36,10 @@ public class Trainer {
 
 	@Column(name="zip")
 	private String zip;
-
-	@OneToOne(mappedBy = "trainer")
+	
+	@OneToMany(mappedBy = "trainer")
 	@JsonIgnore
-	private GymSession gymSession;
-
-	@JsonIgnore
-	@Column(name="availability")
-	private boolean availability;
+	private List<GymSession> gymSessions;
 
 	public Integer getId() {
 		return id;
@@ -86,24 +83,18 @@ public class Trainer {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}	
-	public GymSession getGymSession() {
-		return gymSession;
+	public List<GymSession> getGymSessions() {
+		return gymSessions;
 	}
-	public void setGymSession(GymSession gymSession) {
-		this.gymSession = gymSession;
-	}	
-	public boolean getAvailability() {
-		return availability;
+	public void setGymSessions(List<GymSession> gymSessions) {
+		this.gymSessions = gymSessions;
 	}
-	public void setAvailability(boolean availability) {
-		this.availability = availability;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Trainer [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", street=" + street
-				+ ", city=" + city + ", zip=" + zip + ", gymSession=" + gymSession + ", availability=" + availability
-				+ "]";
+				+ ", city=" + city + ", zip=" + zip + "]";
 	}
+	
 
 }

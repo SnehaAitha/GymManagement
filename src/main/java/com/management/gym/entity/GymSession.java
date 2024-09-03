@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -22,10 +21,10 @@ public class GymSession {
 	@Column(name="id")
 	private Integer id;
 
-	@Column(name="startTime")
+	@Column(name="start_time")
 	private LocalDateTime startTime;
 
-	@Column(name="endTime")
+	@Column(name="end_time")
 	private LocalDateTime endTime;
 
 	@Transient
@@ -38,12 +37,12 @@ public class GymSession {
 	@JoinColumn(name = "gym_id")
 	private Gym gym;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "trainer_id", referencedColumnName = "id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "trainer_id")
 	private Trainer trainer;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "customer_id", referencedColumnName = "id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
 
 	public Integer getId() {

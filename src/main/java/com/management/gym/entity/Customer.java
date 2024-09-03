@@ -1,13 +1,14 @@
 package com.management.gym.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,14 +28,10 @@ public class Customer {
 
 	@Column(name="dob")
 	private LocalDate dob;
-
-	@OneToOne(mappedBy = "customer")
+	
+	@OneToMany(mappedBy = "customer")
 	@JsonIgnore
-	private GymSession gymSession;
-
-	@JsonIgnore
-	@Column(name="availability")
-	private boolean availability;
+	private List<GymSession> gymSessions;
 
 	public Integer getId() {
 		return id;
@@ -68,27 +65,17 @@ public class Customer {
 		this.dob = dob;
 	}
 
-	public GymSession getGymSession() {
-		return gymSession;
+	public List<GymSession> getGymSessions() {
+		return gymSessions;
 	}
 
-	public void setGymSession(GymSession gymSession) {
-		this.gymSession = gymSession;
-	}
-
-	public boolean getAvailability() {
-		return availability;
-	}
-
-	public void setAvailability(boolean availability) {
-		this.availability = availability;
+	public void setGymSessions(List<GymSession> gymSessions) {
+		this.gymSessions = gymSessions;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", name=" + name + ", bio=" + bio + ", dob=" + dob + ", gymSession=" + gymSession
-				+ ", availability=" + availability + "]";
+		return "Customer [id=" + id + ", name=" + name + ", bio=" + bio + ", dob=" + dob + "]";
 	}
-
 
 }

@@ -13,18 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.gym.dto.User;
 import com.management.gym.entity.Trainer;
 import com.management.gym.service.TrainerService;
 
-import lombok.extern.log4j.Log4j2;
-
 @RestController
 @RequestMapping("/trainer")
-@Log4j2
 public class TrainerController {
 
 	@Autowired
@@ -59,7 +55,7 @@ public class TrainerController {
 				trainer.setCity(user.getAddress().getCity());
 				trainer.setStreet(user.getAddress().getStreet());
 				trainer.setZip(user.getAddress().getZip());
-				trainer.setAvailability(true);
+				//trainer.setAvailability(true);
 
 				trainers.add(trainer);
 			}

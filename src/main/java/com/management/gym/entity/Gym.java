@@ -19,7 +19,7 @@ public class Gym {
 	@Column(name="id")
 	private Integer id;
 
-	@Column(name="us-state")
+	@Column(name="us_state")
 	private String usState;
 
 	@Column(name="name")

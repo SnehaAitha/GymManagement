@@ -1,5 +1,6 @@
 package com.management.gym.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +13,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.management.gym.entity.Customer;
 import com.management.gym.entity.GymSession;
-import com.management.gym.entity.Trainer;
 import com.management.gym.service.CustomerService;
 import com.management.gym.service.GymSessionService;
 import com.management.gym.service.TrainerService;
-
-import lombok.extern.log4j.Log4j2;
+import com.management.gym.util.DateUtil;
 
 @RestController
 @RequestMapping("/gymsession")
-@Log4j2
 public class GymSessionController {
 
 	@Autowired
@@ -40,19 +36,23 @@ public class GymSessionController {
 	public ResponseEntity<?> bookSession(@RequestBody GymSession session) {
 		GymSession gymSession = null;
 		try {
-			Optional<Trainer> trainer = trainerService.fetchTrainer(session.getTrainer().getId());
-			Optional<Customer> customer = customerService.fetchCustomer(session.getCustomer().getId());
-			if(trainer.isEmpty() || !trainer.isPresent()) {
-				return new ResponseEntity<String>("Trainer is not found.",HttpStatus.NOT_FOUND);
-			}
-			if(customer.isEmpty() || !customer.isPresent()) {
-				return new ResponseEntity<String>("Customer is not found.",HttpStatus.NOT_FOUND);
-			}
-			if(!customer.isEmpty() && customer.isPresent() && customer.get().getAvailability() == false) {
-				return new ResponseEntity<String>("Customer is not available.",HttpStatus.NOT_FOUND);
-			}
-			if(!trainer.isEmpty() && trainer.isPresent() && trainer.get().getAvailability() == false) {
-				return new ResponseEntity<String>("Trainer is not available.",HttpStatus.NOT_FOUND);
+			List<GymSession> sessions = gymSessionService.fetchAllSessions();
+			if(!sessions.isEmpty() && sessions.size()>0)
+			{
+				for(GymSession sess:sessions)
+				{
+					LocalDateTime sessionStartTime = DateUtil.convertDateStringToUTCFormat(session.getStartTimeString());
+					LocalDateTime sessionEndTime = DateUtil.convertDateStringToUTCFormat(session.getEndTimeString());
+
+					if((sess.getStartTime().isEqual(sessionStartTime)) && (sess.getEndTime().isEqual(sessionEndTime))) {
+						if(session.getTrainer().getId() == sess.getTrainer().getId()) {
+							return new ResponseEntity<String>("Trainer is not available for this session.",HttpStatus.NOT_FOUND);
+						}
+						if (session.getCustomer().getId() == sess.getCustomer().getId()){
+							return new ResponseEntity<String>("Customer is not available for this session.",HttpStatus.NOT_FOUND);
+						}
+					}
+				}
 			}
 			gymSession = gymSessionService.bookSession(session);
 			if(gymSession != null && gymSession.getId() != 0)

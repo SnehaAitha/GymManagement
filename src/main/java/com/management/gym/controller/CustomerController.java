@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.gym.dto.Actor;
@@ -23,11 +22,8 @@ import com.management.gym.dto.Actress;
 import com.management.gym.entity.Customer;
 import com.management.gym.service.CustomerService;
 
-import lombok.extern.log4j.Log4j2;
-
 @RestController
 @RequestMapping("/customer")
-@Log4j2
 public class CustomerController {
 
 	@Autowired
@@ -75,7 +71,7 @@ public class CustomerController {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 				LocalDate date = LocalDate.parse("01-Jan-"+actor.getBirth_year(), formatter);
 				customer.setDob(date);
-				customer.setAvailability(true);
+				//customer.setAvailability(true);
 
 				customers.add(customer);
 			}
@@ -87,7 +83,7 @@ public class CustomerController {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 				LocalDate date = LocalDate.parse("01-Jan-"+actress.getBirth_year(), formatter);
 				customer.setDob(date);
-				customer.setAvailability(true);
+				//customer.setAvailability(true);
 
 				customers.add(customer);
 			}

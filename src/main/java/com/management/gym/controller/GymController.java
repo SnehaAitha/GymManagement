@@ -13,18 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.gym.dto.USState;
 import com.management.gym.entity.Gym;
 import com.management.gym.service.GymService;
 
-import lombok.extern.log4j.Log4j2;
-
 @RestController
 @RequestMapping("/gym")
-@Log4j2
 public class GymController {
 
 	@Autowired
