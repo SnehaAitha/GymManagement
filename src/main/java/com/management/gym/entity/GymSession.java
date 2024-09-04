@@ -33,15 +33,15 @@ public class GymSession {
 	@Transient
 	private String endTimeString;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "gym_id")
 	private Gym gym;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "trainer_id")
 	private Trainer trainer;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 
