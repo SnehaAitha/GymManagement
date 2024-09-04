@@ -25,7 +25,7 @@ public class Gym {
 	@Column(name="name")
 	private String name;
 
-	@OneToMany(mappedBy = "gym")
+	@OneToMany(mappedBy = "gym",orphanRemoval = true)
 	@JsonIgnore
 	private List<GymSession> gymSessions;
 

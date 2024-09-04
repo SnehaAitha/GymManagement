@@ -71,7 +71,6 @@ public class CustomerController {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 				LocalDate date = LocalDate.parse("01-Jan-"+actor.getBirth_year(), formatter);
 				customer.setDob(date);
-				//customer.setAvailability(true);
 
 				customers.add(customer);
 			}

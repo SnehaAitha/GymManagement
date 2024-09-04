@@ -55,8 +55,9 @@ public class GymSessionController {
 				}
 			}
 			gymSession = gymSessionService.bookSession(session);
-			if(gymSession != null && gymSession.getId() != 0)
+			if(gymSession != null && gymSession.getId() != 0) {
 				return new ResponseEntity<GymSession>(gymSession,HttpStatus.OK);
+			}
 			return new ResponseEntity<String>("GymSession booking failed.",HttpStatus.BAD_REQUEST);
 		}
 		catch(Exception e) {
@@ -69,8 +70,9 @@ public class GymSessionController {
 		List<GymSession> gymSessions = null;
 		try {
 			gymSessions = gymSessionService.searchSession(session);
-			if(gymSessions != null && gymSessions.size()> 0)
+			if(gymSessions != null && gymSessions.size()> 0) {
 				return new ResponseEntity<List<GymSession>>(gymSessions,HttpStatus.OK);
+			}
 			return new ResponseEntity<String>("No gym sessions available.",HttpStatus.NOT_FOUND);
 		}
 		catch(Exception e) {
@@ -90,14 +92,12 @@ public class GymSessionController {
 			}
 			timeExceeded=gymSessionService.cancelSession(id,gymSession.get().getStartTime());
 			gymSession = gymSessionService.fetchGymSession(id);
-			if(timeExceeded != true) {
-				if(gymSession.isEmpty() || !gymSession.isPresent()) {		
+			if(gymSession.isEmpty() || !gymSession.isPresent()) {
+				if(timeExceeded != true) {				
 					return new ResponseEntity<String>("Gym Session "
 							+id+" cancelled successfully for free of charge.",HttpStatus.OK);
 				}
-			}
-			else {
-				if((gymSession.isEmpty() || !gymSession.isPresent())) {		
+				else {
 					return new ResponseEntity<String>("Gym Session "
 							+id+" cancelled successfully but you will charged for the same.",HttpStatus.OK);
 				}
@@ -120,14 +120,12 @@ public class GymSessionController {
 				return new ResponseEntity<String>("Gym Session " + id+ " not found.",HttpStatus.NOT_FOUND);
 			}
 			timeExceeded=gymSessionService.rescheduleSession(id,session.getStartTimeString(),session.getEndTimeString());
-			if(timeExceeded != true) {
-				if(session.getStartTimeString() != null && session.getEndTimeString() != null) {		
+			if(session.getStartTimeString() != null && session.getEndTimeString() != null) {		
+				if(timeExceeded != true) {
 					return new ResponseEntity<String>("Gym Session "
 							+id+" rescheduled successfully without any charge.",HttpStatus.OK);
 				}
-			}
-			else {
-				if(session.getStartTimeString() != null && session.getEndTimeString() != null) {		
+				else {
 					return new ResponseEntity<String>("Gym Session "
 							+id+" rescheduled successfully but you will charged for the same.",HttpStatus.OK);
 				}
