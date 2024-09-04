@@ -15,14 +15,14 @@ public final class DateUtil {
 		TimeZone utcTimeZone = TimeZone.getTimeZone("UTC");
 		formatter.setTimeZone(utcTimeZone);	
 		
-		Date ipputDateInAmerica = new Date();
+		Date inputDateInAmerica = new Date();
 
 		try {
-			ipputDateInAmerica = formatter.parse(inputDateString);
+			inputDateInAmerica = formatter.parse(inputDateString);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} 
-		LocalDateTime inputDateTime = ipputDateInAmerica.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();		
+		LocalDateTime inputDateTime = inputDateInAmerica.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();		
 		return inputDateTime;
 		
 	}
